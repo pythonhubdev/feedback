@@ -48,7 +48,8 @@
 			"complexity": {
 				"recommended": true,
 				"noExcessiveCognitiveComplexity": "error",
-				"noUselessFragments": "error"
+				"noUselessFragments": "error",
+				"noStaticOnlyClass": "off"
 			},
 			"correctness": {
 				"recommended": true,
