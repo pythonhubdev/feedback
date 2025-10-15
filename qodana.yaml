@@ -1,0 +1,16 @@
+#-------------------------------------------------------------------------------#
+#               Qodana analysis is configured by qodana.yaml file               #
+#             https://www.jetbrains.com/help/qodana/qodana-yaml.html            #
+#-------------------------------------------------------------------------------#
+
+version: "1.0"
+
+profile:
+    name: qodana.recommended
+
+exclude:
+    -   name: All
+        paths:
+            - src/routeTree.gen.ts
+
+linter: jetbrains/qodana-js:2025.3
