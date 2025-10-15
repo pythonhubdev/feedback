@@ -1,0 +1,35 @@
+{
+	"compilerOptions": {
+		"lib": ["DOM", "DOM.Iterable", "ES2024"],
+		"target": "ESNext",
+		"module": "ESNext",
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./src/*"]
+		},
+		"moduleResolution": "bundler",
+		"jsx": "preserve",
+		"jsxImportSource": "solid-js",
+		"types": ["vite/client"],
+		"allowImportingTsExtensions": true,
+		"verbatimModuleSyntax": true,
+		"noEmit": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedSideEffectImports": true,
+		"declaration": false,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		"useDefineForClassFields": true,
+		"forceConsistentCasingInFileNames": true,
+		"allowJs": true,
+		"checkJs": true,
+		"incremental": true
+	},
+	"include": ["src", "**/*.ts", "**/*.tsx"],
+	"exclude": ["node_modules", "dist", "build"]
+}

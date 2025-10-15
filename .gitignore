@@ -1,0 +1,47 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+.env
+.nitro
+.tanstack
+.wrangler
+
+# Local
+*.log*
+
+# Dist
+dist/
+coverage/
+html/
+
+# Profile
+.rspack-profile-*/
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+.idea/
+.vscode/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+
+# START Ruler Generated Files
+/.github/copilot-instructions.md
+/.github/copilot-instructions.md.bak
+/AGENTS.md
+/AGENTS.md.bak
+/CLAUDE.md
+/CLAUDE.md.bak
+.gemini/
+# END Ruler Generated Files
+
+logs.txt

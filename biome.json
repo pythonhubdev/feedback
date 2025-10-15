@@ -1,0 +1,100 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.2.4/schema.json",
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"formatter": {
+		"indentStyle": "tab",
+		"indentWidth": 4,
+		"lineWidth": 80,
+		"lineEnding": "lf",
+		"includes": ["**", "!**/node_modules/**", "!**/dist/**", "!**/.next/**"]
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double",
+			"trailingCommas": "all",
+			"arrowParentheses": "always",
+			"bracketSpacing": true,
+			"bracketSameLine": false,
+			"semicolons": "always"
+		}
+	},
+	"css": {
+		"parser": {
+			"cssModules": true
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"a11y": {
+				"recommended": true,
+				"useAltText": "error",
+				"useButtonType": "error",
+				"useKeyWithClickEvents": "error",
+				"useValidAnchor": "error"
+			},
+			"complexity": {
+				"recommended": true,
+				"noExcessiveCognitiveComplexity": "error",
+				"noUselessFragments": "error"
+			},
+			"correctness": {
+				"recommended": true,
+				"noUnusedVariables": "error",
+				"noUnreachable": "error"
+			},
+			"performance": {
+				"recommended": true,
+				"noDelete": "error"
+			},
+			"security": {
+				"recommended": true,
+				"noDangerouslySetInnerHtml": "error"
+			},
+			"style": {
+				"recommended": true,
+				"noNegationElse": "warn",
+				"useConsistentArrayType": "error",
+				"noImplicitBoolean": "error",
+				"useTemplate": "error"
+			},
+			"suspicious": {
+				"recommended": true,
+				"noDebugger": "error",
+				"noEmptyInterface": "error",
+				"noExplicitAny": "warn",
+				"noUnknownAtRules": "off",
+				"noConsole": {
+					"level": "warn",
+					"options": {
+						"allow": ["log"]
+					}
+				}
+			}
+		},
+		"includes": ["**", "!**/node_modules/**", "!**/dist/**", "!**/.next/**"]
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"experimentalScannerIgnores": ["src/styles.css"],
+		"includes": [
+			"**",
+			"!**/node_modules",
+			"!**/dist",
+			"!**/*.min.js",
+			"!**/*.gen.ts"
+		]
+	}
+}
