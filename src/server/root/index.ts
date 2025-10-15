@@ -12,7 +12,7 @@ export const rootService = new Elysia({
 		summary: "Get welcome message",
 		description: "Returns a welcome message confirming the API is running",
 	},
-}).get("/", () => RootService.root(), {
+}).get("", () => RootService.root(), {
 	response: ResponseSchema,
 });
 
