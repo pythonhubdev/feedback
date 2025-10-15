@@ -1,13 +1,17 @@
 import cors from "@elysiajs/cors";
 import { treaty } from "@elysiajs/eden";
 import openapi, { fromTypes } from "@elysiajs/openapi";
+import serverTiming from "@elysiajs/server-timing";
 import { createFileRoute } from "@tanstack/solid-router";
 import { createIsomorphicFn } from "@tanstack/solid-start";
 import { toJsonSchema } from "@valibot/to-json-schema";
 import { Elysia } from "elysia";
 import { env } from "~/core/config/env.ts";
-import type { TResponseSchema } from "~/core/schema/common";
-import { ResponseSchema } from "~/core/schema/common";
+import {
+	ResponseSchema,
+	Status,
+	type TResponseSchema,
+} from "~/core/schema/common";
 import rootService from "~/server/root";
 
 const app = new Elysia({
@@ -25,6 +29,7 @@ const app = new Elysia({
 			credentials: true,
 		}),
 	)
+	.use(serverTiming())
 	.use(
 		openapi({
 			documentation: {
@@ -43,16 +48,6 @@ const app = new Elysia({
 						description: "Production server",
 					},
 				],
-				tags: [
-					{
-						name: "root",
-						description: "Root service endpoints",
-					},
-					{
-						name: "health",
-						description: "Health check endpoints",
-					},
-				],
 			},
 			mapJsonSchema: {
 				valibot: toJsonSchema,
@@ -68,7 +63,7 @@ const app = new Elysia({
 		"/health",
 		() => {
 			const response: TResponseSchema = {
-				status: "success",
+				status: Status.Success,
 				message: "Service is healthy",
 			};
 			return response;
@@ -102,4 +97,4 @@ export const Route = createFileRoute("/api/$")({
 
 export const api = createIsomorphicFn()
 	.server(() => treaty(app).api)
-	.client(() => treaty<typeof app>("localhost:3000").api);
+	.client(() => treaty<typeof app>(env.FEEDBACK_APP_URL).api);

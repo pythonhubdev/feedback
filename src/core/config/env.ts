@@ -4,6 +4,10 @@ import * as v from "valibot";
 export const env = createEnv({
 	server: {
 		SERVER_URL: v.pipe(v.string("Server URL must be a string"), v.url()),
+		SUPABASE_URL: v.pipe(
+			v.string("Supabase URL must be a string"),
+			v.url(),
+		),
 	},
 
 	clientPrefix: "FEEDBACK_",
@@ -22,6 +26,7 @@ export const env = createEnv({
 	},
 	runtimeEnvStrict: {
 		SERVER_URL: process.env.SERVER_URL,
+		SUPABASE_URL: process.env.SUPABASE_URL,
 		FEEDBACK_APP_TITLE: process.env.FEEDBACK_APP_TITLE,
 		FEEDBACK_APP_DESCRIPTION: process.env.FEEDBACK_APP_DESCRIPTION,
 		FEEDBACK_APP_URL: process.env.FEEDBACK_APP_URL,
