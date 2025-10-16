@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/solid-query";
+import { createMemo } from "solid-js";
 import { toast } from "solid-sonner";
 import { api } from "~/routes/api.$.ts";
 import type { SessionName, SessionTypes } from "~/server/feedback/schema.ts";
@@ -46,9 +47,11 @@ export const useFeedbackSubmission = () => {
 		},
 	}));
 
+	const isSubmitting = createMemo(() => mutation.isPending);
+
 	return {
 		submitFeedback: mutation.mutateAsync,
-		isSubmitting: mutation.isPending,
+		isSubmitting,
 		error: mutation.error,
 		reset: mutation.reset,
 	};

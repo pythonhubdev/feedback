@@ -87,7 +87,25 @@ const app = new Elysia({
 // Export the app type for Eden Treaty
 export type App = typeof app;
 
-const handle = ({ request }: { request: Request }) => app.fetch(request);
+const handle = async ({ request }: { request: Request }) => {
+	try {
+		return await app.fetch(request);
+	} catch (_error) {
+		console.log("API handler error:", _error);
+		return new Response(
+			JSON.stringify({
+				status: "error",
+				message: "Internal server error",
+			}),
+			{
+				status: 500,
+				headers: {
+					"Content-Type": "application/json",
+				},
+			},
+		);
+	}
+};
 
 export const Route = createFileRoute("/api/$")({
 	server: {
@@ -97,6 +115,7 @@ export const Route = createFileRoute("/api/$")({
 			PUT: handle,
 			DELETE: handle,
 			PATCH: handle,
+			OPTIONS: handle,
 		},
 	},
 });

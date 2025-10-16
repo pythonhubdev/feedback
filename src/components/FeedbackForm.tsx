@@ -1,3 +1,4 @@
+import { LoaderCircle } from "lucide-solid";
 import { createSignal, Show } from "solid-js";
 import { Motion } from "solid-motionone";
 import { toast } from "solid-sonner";
@@ -243,10 +244,16 @@ export function FeedbackForm(props: FeedbackFormProps) {
 						<Show when={currentStep() === totalSteps - 1}>
 							<Button
 								onClick={handleSubmit}
-								disabled={isSubmitting}
+								disabled={isSubmitting()}
 								class="bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 px-8 py-6 border-0 disabled:opacity-50 disabled:cursor-not-allowed"
 							>
-								{isSubmitting
+								<Show when={isSubmitting()}>
+									<LoaderCircle
+										class="animate-spin"
+										size={16}
+									/>
+								</Show>
+								{isSubmitting()
 									? "SUBMITTING..."
 									: "SUBMIT FEEDBACK"}
 							</Button>
