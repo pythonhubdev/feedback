@@ -1,4 +1,4 @@
-import { Code, Database, Palette } from "lucide-solid";
+import { Code, Database, LoaderCircle, Palette } from "lucide-solid";
 import type { JSX } from "solid-js";
 import { For, Show } from "solid-js";
 import { Motion } from "solid-motionone";
@@ -112,7 +112,9 @@ export function CareerResults(props: CareerResultsProps) {
 						>
 							<Show
 								when={!props.isSubmitting}
-								fallback="SUBMITTING..."
+								fallback={
+									<LoaderCircle class="w-5 h-5 animate-spin" />
+								}
 							>
 								FINISH QUIZ
 							</Show>
