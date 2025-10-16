@@ -18,7 +18,7 @@ import rootService from "~/server/root";
 const app = new Elysia({
 	prefix: "/api",
 	aot: true,
-	name: "Mentorship.01 API",
+	name: "Mentorship.01",
 	analytic: true,
 	sucrose: {},
 })
@@ -35,8 +35,9 @@ const app = new Elysia({
 		openapi({
 			documentation: {
 				info: {
-					title: "Mentorship.01 API",
-					description: "API documentation for Mentorship.01 platform",
+					title: "Mentorship.01",
+					description:
+						"Mentorship.01: A mentorship application for mentoring people, collecting feedback after each session, and providing guidance, extensible to handle future session types.",
 					version: "0.0.1",
 				},
 				servers: [
