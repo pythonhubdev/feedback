@@ -24,7 +24,14 @@ interface StepPersonalInfoProps {
 export function StepPersonalInfo(props: StepPersonalInfoProps) {
 	const startYear = 2025;
 
-	const romanNumerals = ["I", "II", "III", "IV", "V"];
+	// Map Roman numerals to their numeric values
+	const yearOptions = [
+		{ label: "I", value: "1" },
+		{ label: "II", value: "2" },
+		{ label: "III", value: "3" },
+		{ label: "IV", value: "4" },
+	];
+
 	const departments = ["Computer Science and Engineering", "AIDS", "CSBS"];
 
 	const updateField =
@@ -84,17 +91,30 @@ export function StepPersonalInfo(props: StepPersonalInfoProps) {
 						<Select
 							value={props.data.year}
 							onChange={updateField("year")}
-							options={romanNumerals}
+							options={yearOptions.map((opt) => opt.value)}
 							placeholder="Select year"
-							itemComponent={(props) => (
-								<SelectItem item={props.item}>
-									{props.item.rawValue}
-								</SelectItem>
-							)}
+							itemComponent={(props) => {
+								const option = yearOptions.find(
+									(opt) => opt.value === props.item.rawValue,
+								);
+								return (
+									<SelectItem item={props.item}>
+										{option?.label || props.item.rawValue}
+									</SelectItem>
+								);
+							}}
 						>
 							<SelectTrigger class="border-2 border-black dark:border-white h-10 bg-white dark:bg-gray-950 w-full text-sm">
 								<SelectValue<string>>
-									{(state) => state.selectedOption()}
+									{(state) => {
+										const selectedValue =
+											state.selectedOption();
+										const option = yearOptions.find(
+											(opt) =>
+												opt.value === selectedValue,
+										);
+										return option?.label || selectedValue;
+									}}
 								</SelectValue>
 							</SelectTrigger>
 							<SelectContent />

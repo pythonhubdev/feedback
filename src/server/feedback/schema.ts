@@ -1,10 +1,7 @@
 import * as v from "valibot";
 
 enum SessionTypes {
-	Workshop = "WORKSHOP",
 	Lecture = "LECTURE",
-	HandsOn = "HANDS_ON",
-	MockInterview = "MOCK_INTERVIEW",
 }
 
 enum SessionName {
@@ -19,8 +16,15 @@ const FeedbackSchema = v.object({
 		v.email("The email is badly formatted."),
 		v.maxLength(30, "Your email is too long."),
 	),
-	year: v.pipe(v.number(), v.minValue(2025, "Year must be at least 2025")),
-	batch: v.pipe(v.number(), v.minValue(1, "Batch must be at least 1")),
+	year: v.pipe(
+		v.number("Year must be a number"),
+		v.minValue(1, "Year must be at least 1"),
+		v.maxValue(5, "Year must be at most 4"),
+	),
+	batch: v.pipe(
+		v.number("Batch must be a number"),
+		v.minValue(2025, "Batch must be at least 2025"),
+	),
 	department: v.pipe(
 		v.string("Department must be a string"),
 		v.maxLength(100, "Department name is too long."),

@@ -21,12 +21,15 @@ export const useFeedbackSubmission = () => {
 	const mutation = useMutation(() => ({
 		mutationKey: ["feedback submission"],
 		mutationFn: async (data: FeedbackSubmissionData) => {
-			const response = await api.feedback.post(data);
+			const client = api();
+			const response = await client.feedback.post(data);
 
 			if (!response.data) {
-				throw new Error(
-					response.message || "Failed to submit feedback",
-				);
+				const errorMessage =
+					response.error?.value?.message ||
+					response.error?.value?.summary ||
+					"Failed to submit feedback";
+				throw new Error(errorMessage);
 			}
 
 			return response.data;

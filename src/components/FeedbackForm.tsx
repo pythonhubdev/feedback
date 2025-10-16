@@ -1,5 +1,6 @@
 import { createSignal, Show } from "solid-js";
 import { Motion } from "solid-motionone";
+import { toast } from "solid-sonner";
 import { useFeedbackSubmission } from "~/hooks/useFeedbackSubmission";
 import { SessionName, SessionTypes } from "~/server/feedback/schema.ts";
 import { FeedbackHeader } from "./FeedbackHeader";
@@ -93,11 +94,15 @@ export function FeedbackForm(props: FeedbackFormProps) {
 				(rating.usefulness + rating.clarity + rating.engagement) / 3,
 			);
 
+			// Parse year and batch, handle empty/invalid values
+			const parsedYear = parseInt(info.year, 10);
+			const parsedBatch = parseInt(info.batch, 10);
+
 			const feedbackPayload = {
 				name: info.name,
 				email: info.email,
-				year: parseInt(info.year, 10),
-				batch: parseInt(info.batch, 10),
+				year: parsedYear,
+				batch: parsedBatch,
 				department: info.department,
 				workedWell: feedbackData.liked,
 				improve: feedbackData.improve,
@@ -111,8 +116,11 @@ export function FeedbackForm(props: FeedbackFormProps) {
 
 			// Navigate to thank you page after successful submission
 			props.onComplete();
-		} catch (_error) {
-			// Error is already handled by the toast in the hook
+		} catch (error) {
+			// Show error toast if validation fails
+			if (error instanceof Error) {
+				toast.error(error.message);
+			}
 		}
 	};
 

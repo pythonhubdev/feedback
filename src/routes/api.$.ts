@@ -6,7 +6,6 @@ import { createFileRoute } from "@tanstack/solid-router";
 import { createIsomorphicFn } from "@tanstack/solid-start";
 import { toJsonSchema } from "@valibot/to-json-schema";
 import { Elysia } from "elysia";
-import { env } from "~/core/config/env.ts";
 import {
 	ResponseSchema,
 	Status,
@@ -19,7 +18,7 @@ import rootService from "~/server/root";
 const app = new Elysia({
 	prefix: "/api",
 	aot: true,
-	name: env.APP_TITLE,
+	name: "Mentorship.01 API",
 	analytic: true,
 	sucrose: {},
 })
@@ -36,13 +35,13 @@ const app = new Elysia({
 		openapi({
 			documentation: {
 				info: {
-					title: env.APP_TITLE,
-					description: env.APP_DESCRIPTION,
+					title: "Mentorship.01 API",
+					description: "API documentation for Mentorship.01 platform",
 					version: "0.0.1",
 				},
 				servers: [
 					{
-						url: env.SERVER_URL,
+						url: "http://localhost:3000/api",
 						description: "Development server",
 					},
 					{
@@ -78,12 +77,14 @@ const app = new Elysia({
 				description: "Returns the health status of the API service",
 			},
 		},
-	);
+	)
+	// Register all services in the chain
+	.use(rootService)
+	.use(feedbackService)
+	.use(careerService);
 
-// Register all services
-app.use(rootService);
-app.use(feedbackService);
-app.use(careerService);
+// Export the app type for Eden Treaty
+export type App = typeof app;
 
 const handle = ({ request }: { request: Request }) => app.fetch(request);
 
@@ -101,4 +102,4 @@ export const Route = createFileRoute("/api/$")({
 
 export const api = createIsomorphicFn()
 	.server(() => treaty(app).api)
-	.client(() => treaty<typeof app>(env.APP_URL).api);
+	.client(() => treaty<App>("http://localhost:3000").api);
