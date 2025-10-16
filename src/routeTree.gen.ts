@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ThankYouRouteImport } from './routes/thank-you'
 import { Route as FeedbackRouteImport } from './routes/feedback'
+import { Route as CareerRouteImport } from './routes/career'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiSplatRouteImport } from './routes/api.$'
 
@@ -22,6 +23,11 @@ const ThankYouRoute = ThankYouRouteImport.update({
 const FeedbackRoute = FeedbackRouteImport.update({
   id: '/feedback',
   path: '/feedback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerRoute = CareerRouteImport.update({
+  id: '/career',
+  path: '/career',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,12 +43,14 @@ const ApiSplatRoute = ApiSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/career': typeof CareerRoute
   '/feedback': typeof FeedbackRoute
   '/thank-you': typeof ThankYouRoute
   '/api/$': typeof ApiSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/career': typeof CareerRoute
   '/feedback': typeof FeedbackRoute
   '/thank-you': typeof ThankYouRoute
   '/api/$': typeof ApiSplatRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/career': typeof CareerRoute
   '/feedback': typeof FeedbackRoute
   '/thank-you': typeof ThankYouRoute
   '/api/$': typeof ApiSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/feedback' | '/thank-you' | '/api/$'
+  fullPaths: '/' | '/career' | '/feedback' | '/thank-you' | '/api/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/feedback' | '/thank-you' | '/api/$'
-  id: '__root__' | '/' | '/feedback' | '/thank-you' | '/api/$'
+  to: '/' | '/career' | '/feedback' | '/thank-you' | '/api/$'
+  id: '__root__' | '/' | '/career' | '/feedback' | '/thank-you' | '/api/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CareerRoute: typeof CareerRoute
   FeedbackRoute: typeof FeedbackRoute
   ThankYouRoute: typeof ThankYouRoute
   ApiSplatRoute: typeof ApiSplatRoute
@@ -85,6 +95,13 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof FeedbackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/career': {
+      id: '/career'
+      path: '/career'
+      fullPath: '/career'
+      preLoaderRoute: typeof CareerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +121,7 @@ declare module '@tanstack/solid-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CareerRoute: CareerRoute,
   FeedbackRoute: FeedbackRoute,
   ThankYouRoute: ThankYouRoute,
   ApiSplatRoute: ApiSplatRoute,

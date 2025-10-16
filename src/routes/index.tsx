@@ -16,8 +16,7 @@ function App() {
 				navigate({ to: "/feedback" });
 				break;
 			case "quiz":
-				// TODO: Implement quiz route
-				console.log("Quiz not implemented yet");
+				navigate({ to: "/career" });
 				break;
 			case "roles":
 				// TODO: Implement roles route
