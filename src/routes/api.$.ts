@@ -122,4 +122,11 @@ export const Route = createFileRoute("/api/$")({
 
 export const api = createIsomorphicFn()
 	.server(() => treaty(app).api)
-	.client(() => treaty<App>("http://localhost:3000").api);
+	.client(
+		() =>
+			treaty<App>(
+				process.env.NODE_ENV === "production"
+					? "https://mentorship01.vercel.app"
+					: "http://localhost:3000",
+			).api,
+	);

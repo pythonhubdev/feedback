@@ -185,9 +185,10 @@ export function Hero(props: HeroProps) {
 						</div>
 						<Button
 							onClick={() => props.onNavigate("suggestions")}
-							class="w-full md:w-auto bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 px-6 sm:px-8 py-4 sm:py-6 border-0 text-sm sm:text-base whitespace-nowrap"
+							disabled={true}
+							class="w-full md:w-auto bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 px-6 sm:px-8 py-4 sm:py-6 border-0 text-sm sm:text-base whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
 						>
-							SUGGEST TOPICS
+							COMING SOON...
 						</Button>
 					</Motion.div>
 				</div>
