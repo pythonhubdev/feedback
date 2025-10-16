@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/solid-router";
+import { createFileRoute, useNavigate } from "@tanstack/solid-router";
 import { FeedbackForm } from "~/components/FeedbackForm";
 
 export const Route = createFileRoute("/feedback")({
@@ -6,14 +6,14 @@ export const Route = createFileRoute("/feedback")({
 });
 
 function FeedbackRoute() {
-	const navigate = Route.useNavigate();
+	const navigate = useNavigate();
 
-	const handleBackToHome = () => {
-		navigate({ to: "/" });
+	const handleBackToHome = async () => {
+		await navigate({ to: "/" });
 	};
 
-	const handleComplete = () => {
-		navigate({ to: "/feedback/thank-you" });
+	const handleComplete = async () => {
+		await navigate({ to: "/thank-you" });
 	};
 
 	return (

@@ -86,43 +86,8 @@ export function FeedbackForm(props: FeedbackFormProps) {
 			feedback: feedback(),
 		});
 
-		// Trigger confetti but don't rely on it for navigation
-		try {
-			triggerConfetti();
-		} catch (error) {
-			console.warn("Confetti failed:", error);
-		}
-	};
-
-	const triggerConfetti = () => {
-		if (typeof window !== "undefined" && (window as any).confetti) {
-			(window as any).confetti({
-				particleCount: 150,
-				spread: 70,
-				origin: { y: 0.6 },
-				colors: ["#000000", "#ffffff", "#666666"],
-			});
-
-			setTimeout(() => {
-				(window as any).confetti({
-					particleCount: 100,
-					angle: 60,
-					spread: 55,
-					origin: { x: 0 },
-					colors: ["#000000", "#ffffff", "#666666"],
-				});
-			}, 200);
-
-			setTimeout(() => {
-				(window as any).confetti({
-					particleCount: 100,
-					angle: 120,
-					spread: 55,
-					origin: { x: 1 },
-					colors: ["#000000", "#ffffff", "#666666"],
-				});
-			}, 400);
-		}
+		// Navigate to thank you page
+		props.onComplete();
 	};
 
 	return (
