@@ -1,6 +1,6 @@
 import { Code, Database, Palette } from "lucide-solid";
 import type { JSX } from "solid-js";
-import { For } from "solid-js";
+import { For, Show } from "solid-js";
 import { Motion } from "solid-motionone";
 import { Button } from "../ui/button";
 
@@ -16,6 +16,7 @@ interface CareerResultsProps {
 	result: ResultContent;
 	otherInterests?: string;
 	onComplete: () => void;
+	isSubmitting: boolean;
 }
 
 export function CareerResults(props: CareerResultsProps) {
@@ -106,9 +107,15 @@ export function CareerResults(props: CareerResultsProps) {
 
 						<Button
 							onClick={props.onComplete}
-							class="bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 px-6 sm:px-8 py-4 sm:py-6 border-0 text-sm sm:text-base"
+							disabled={props.isSubmitting}
+							class="bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 px-6 sm:px-8 py-4 sm:py-6 border-0 text-sm sm:text-base disabled:opacity-50"
 						>
-							FINISH QUIZ
+							<Show
+								when={!props.isSubmitting}
+								fallback="SUBMITTING..."
+							>
+								FINISH QUIZ
+							</Show>
 						</Button>
 					</Motion.div>
 				</div>

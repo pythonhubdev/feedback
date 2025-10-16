@@ -1,5 +1,8 @@
 import { createSignal, Match, Show, Switch } from "solid-js";
 import { Motion } from "solid-motionone";
+import { toast } from "solid-sonner";
+import { useCareerSubmission } from "~/hooks/useCareerSubmission";
+import { CareerResult } from "~/server/career/schema";
 import { CareerQuizHeader } from "./career/CareerQuizHeader";
 import { CareerResults, getResultContent } from "./career/CareerResults";
 import { QuestionChoice } from "./career/QuestionChoice";
@@ -7,19 +10,6 @@ import { QuestionText } from "./career/QuestionText";
 import { calculateResults, questions } from "./career/questions";
 import { StepPersonalInfo } from "./career/StepPersonalInfo";
 import { Button } from "./ui/button";
-
-// Extend Window interface for confetti
-declare global {
-	interface Window {
-		confetti?: (options: {
-			particleCount: number;
-			spread: number;
-			origin?: { x?: number; y?: number };
-			angle?: number;
-			colors?: string[];
-		}) => void;
-	}
-}
 
 interface PersonalInfoData {
 	name: string;
@@ -46,6 +36,8 @@ export function CareerQuiz(props: CareerQuizProps) {
 	const [answers, setAnswers] = createSignal<Record<number, string>>({});
 	const [showResults, setShowResults] = createSignal(false);
 
+	const { submitCareer, isSubmitting } = useCareerSubmission();
+
 	const totalSteps = questions.length + 1;
 	const progress = () => ((currentQuestion() + 2) / totalSteps) * 100;
 
@@ -64,40 +56,39 @@ export function CareerQuiz(props: CareerQuizProps) {
 		}
 	};
 
-	const handleQuizComplete = () => {
-		// Trigger confetti if available
-		if (typeof window !== "undefined") {
-			window.confetti?.({
-				particleCount: 150,
-				spread: 70,
-				origin: { y: 0.6 },
-				colors: ["#000000", "#ffffff", "#666666"],
-			});
+	const handleQuizComplete = async () => {
+		try {
+			const info = personalInfo();
+			const role = calculateResults(answers());
 
-			setTimeout(() => {
-				window.confetti?.({
-					particleCount: 100,
-					angle: 60,
-					spread: 55,
-					origin: { x: 0 },
-					colors: ["#000000", "#ffffff", "#666666"],
-				});
-			}, 200);
+			// Map the role to CareerResult enum
+			const resultMap: Record<string, CareerResult> = {
+				designer: CareerResult.Design,
+				frontend: CareerResult.Frontend,
+				backend: CareerResult.Backend,
+			};
 
-			setTimeout(() => {
-				window.confetti?.({
-					particleCount: 100,
-					angle: 120,
-					spread: 55,
-					origin: { x: 1 },
-					colors: ["#000000", "#ffffff", "#666666"],
-				});
-			}, 400);
-		}
+			const careerPayload = {
+				name: info.name,
+				email: info.email,
+				year: Number.parseInt(info.year, 10),
+				batch: Number.parseInt(info.batch, 10),
+				department: info.department,
+				reasonToChooseTech: answers()[4] || "", // Question 4 answer
+				otherInterests: answers()[5] || "", // Question 5 answer
+				result: resultMap[role] || CareerResult.Fullstack,
+			};
 
-		setTimeout(() => {
+			await submitCareer(careerPayload);
+
+			// Navigate to thank you page after successful submission
 			props.onComplete();
-		}, 1000);
+		} catch (error) {
+			// Show error toast if validation fails
+			if (error instanceof Error) {
+				toast.error(error.message);
+			}
+		}
 	};
 
 	const handlePrevious = () => {
@@ -133,6 +124,7 @@ export function CareerQuiz(props: CareerQuizProps) {
 					result={getResults()}
 					otherInterests={answers()[5]}
 					onComplete={handleQuizComplete}
+					isSubmitting={isSubmitting()}
 				/>
 			}
 		>
