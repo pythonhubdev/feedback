@@ -1,15 +1,34 @@
 import { createFileRoute } from "@tanstack/solid-router";
-import { Card, CardDescription, CardHeader } from "~/components/ui/card.tsx";
+import { Hero } from "~/components/Hero";
 
 export const Route = createFileRoute("/")({
 	component: App,
 });
 
 function App() {
-	return (
-		<Card class="m-4 p-2 flex flex-col justify-center align-middle items-start">
-			<CardHeader class="p-0">Hello World</CardHeader>
-			<CardDescription>Something Feedback</CardDescription>
-		</Card>
-	);
+	const navigate = Route.useNavigate();
+
+	const handleNavigate = (
+		section: "feedback" | "quiz" | "roles" | "suggestions",
+	) => {
+		switch (section) {
+			case "feedback":
+				navigate({ to: "/feedback" });
+				break;
+			case "quiz":
+				// TODO: Implement quiz route
+				console.log("Quiz not implemented yet");
+				break;
+			case "roles":
+				// TODO: Implement roles route
+				console.log("Roles not implemented yet");
+				break;
+			case "suggestions":
+				// TODO: Implement suggestions route
+				console.log("Suggestions not implemented yet");
+				break;
+		}
+	};
+
+	return <Hero onNavigate={handleNavigate} />;
 }

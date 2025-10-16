@@ -6,7 +6,6 @@ import { createFileRoute } from "@tanstack/solid-router";
 import { createIsomorphicFn } from "@tanstack/solid-start";
 import { toJsonSchema } from "@valibot/to-json-schema";
 import { Elysia } from "elysia";
-import { env } from "~/core/config/env.ts";
 import {
 	ResponseSchema,
 	Status,
@@ -19,7 +18,7 @@ import rootService from "~/server/root";
 const app = new Elysia({
 	prefix: "/api",
 	aot: true,
-	name: env.MENTORSHIP_APP_TITLE,
+	name: "Mentorship.01",
 	analytic: true,
 	sucrose: {},
 })
@@ -36,13 +35,14 @@ const app = new Elysia({
 		openapi({
 			documentation: {
 				info: {
-					title: env.MENTORSHIP_APP_TITLE,
-					description: env.MENTORSHIP_APP_DESCRIPTION,
+					title: "Mentorship.01",
+					description:
+						"Mentorship.01: A mentorship application for mentoring people, collecting feedback after each session, and providing guidance, extensible to handle future session types.",
 					version: "0.0.1",
 				},
 				servers: [
 					{
-						url: env.SERVER_URL,
+						url: "http://localhost:3000/api",
 						description: "Development server",
 					},
 					{
@@ -78,14 +78,34 @@ const app = new Elysia({
 				description: "Returns the health status of the API service",
 			},
 		},
-	);
+	)
+	// Register all services in the chain
+	.use(rootService)
+	.use(feedbackService)
+	.use(careerService);
 
-// Register all services
-app.use(rootService);
-app.use(feedbackService);
-app.use(careerService);
+// Export the app type for Eden Treaty
+export type App = typeof app;
 
-const handle = ({ request }: { request: Request }) => app.fetch(request);
+const handle = async ({ request }: { request: Request }) => {
+	try {
+		return await app.fetch(request);
+	} catch (_error) {
+		console.log("API handler error:", _error);
+		return new Response(
+			JSON.stringify({
+				status: "error",
+				message: "Internal server error",
+			}),
+			{
+				status: 500,
+				headers: {
+					"Content-Type": "application/json",
+				},
+			},
+		);
+	}
+};
 
 export const Route = createFileRoute("/api/$")({
 	server: {
@@ -95,10 +115,11 @@ export const Route = createFileRoute("/api/$")({
 			PUT: handle,
 			DELETE: handle,
 			PATCH: handle,
+			OPTIONS: handle,
 		},
 	},
 });
 
 export const api = createIsomorphicFn()
 	.server(() => treaty(app).api)
-	.client(() => treaty<typeof app>(env.MENTORSHIP_APP_URL).api);
+	.client(() => treaty<App>("http://localhost:3000").api);
