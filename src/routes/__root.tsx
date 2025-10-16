@@ -5,6 +5,8 @@ import {
 	Scripts,
 } from "@tanstack/solid-router";
 import { TanStackRouterDevtools } from "@tanstack/solid-router-devtools";
+import { createSignal, Show } from "solid-js";
+import { LoadingSplash } from "~/components/LoadingSplash";
 import MentorshipQueryDevTools from "~/integrations/tanstack/qdevtools.tsx";
 import MentorshipQueryProvider from "~/integrations/tanstack/query.tsx";
 import styleCss from "../styles.css?url";
@@ -29,13 +31,24 @@ export const Route = createRootRouteWithContext()({
 });
 
 function RootComponent() {
+	const [isLoading, setIsLoading] = createSignal(true);
+
+	const handleLoadingComplete = () => {
+		setIsLoading(false);
+	};
+
 	return (
 		<>
 			<MentorshipQueryProvider>
 				<HeadContent />
-				<Outlet />
-				<TanStackRouterDevtools />
-				<MentorshipQueryDevTools />
+				<Show when={isLoading()}>
+					<LoadingSplash onLoadingComplete={handleLoadingComplete} />
+				</Show>
+				<Show when={!isLoading()}>
+					<Outlet />
+					<TanStackRouterDevtools />
+					<MentorshipQueryDevTools />
+				</Show>
 			</MentorshipQueryProvider>
 			<Scripts />
 		</>
