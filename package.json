@@ -19,6 +19,8 @@
 	},
 	"dependencies": {
 		"@ark-ui/solid": "^5.26.1",
+		"@effect/platform": "^0.92.1",
+		"@effect/platform-node": "^0.98.3",
 		"@elysiajs/cookie": "^0.8.0",
 		"@elysiajs/cors": "^1.4.0",
 		"@elysiajs/eden": "^1.4.4",
