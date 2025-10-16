@@ -45,3 +45,4 @@ html/
 # END Ruler Generated Files
 
 logs.txt
+.output/
