@@ -11,13 +11,9 @@ const ResponseSchema = v.object({
 	message: v.string("Message must be a string"),
 });
 
-const _dataResponseSchema = v.object({
-	data: v.nullable(v.object({})),
-});
-
 const DataResponseSchema = v.object({
 	...ResponseSchema.entries,
-	..._dataResponseSchema.entries,
+	data: v.optional(v.record(v.string(), v.unknown())),
 });
 
 type TResponseSchema = v.InferOutput<typeof ResponseSchema>;

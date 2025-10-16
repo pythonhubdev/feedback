@@ -8,10 +8,10 @@ enum SessionTypes {
 }
 
 enum SessionName {
-	GitLikedInBase = "GIT_LINKEDIN_BASE",
+	GitLinkedInBase = "GIT_LINKEDIN_BASE",
 }
 
-const FeedbackRequestSchema = v.object({
+const FeedbackSchema = v.object({
 	name: v.string("Name must be a string"),
 	email: v.pipe(
 		v.string(),
@@ -20,7 +20,7 @@ const FeedbackRequestSchema = v.object({
 		v.maxLength(30, "Your email is too long."),
 	),
 	year: v.pipe(v.number(), v.minValue(2025, "Year must be at least 2025")),
-	batch: v.pipe(v.number(), v.minValue(2026, "Batch must be at least 1")),
+	batch: v.pipe(v.number(), v.minValue(1, "Batch must be at least 1")),
 	workedWell: v.pipe(
 		v.string("Worked well must be a string"),
 		v.maxLength(1000, "Your feedback is too long."),
@@ -43,14 +43,21 @@ const FeedbackRequestSchema = v.object({
 		SessionName,
 		"Session name must be one of the predefined names",
 	),
-	sessionDate: v.string("Session date must be a valid date"),
+	sessionDate: v.string("Session date must be a string"),
 });
 
-type TFeedbackRequestSchema = v.InferInput<typeof FeedbackRequestSchema>;
+const FeedbackResponseSchema = v.object({
+	id: v.number("ID must be a number"),
+	...FeedbackSchema.entries,
+});
+
+type TFeedbackSchema = v.InferInput<typeof FeedbackSchema>;
+type TFeedbackResponseSchema = v.InferOutput<typeof FeedbackResponseSchema>;
 
 export {
-	FeedbackRequestSchema,
-	type TFeedbackRequestSchema,
+	FeedbackSchema,
+	type TFeedbackSchema,
+	type TFeedbackResponseSchema,
 	SessionName,
 	SessionTypes,
 };

@@ -1,10 +1,20 @@
 import {
 	date,
 	integer,
+	pgEnum,
 	pgTable,
-	primaryKey,
+	unique,
 	varchar,
 } from "drizzle-orm/pg-core";
+
+const sessionTypeEnum = pgEnum("sessionType", [
+	"WORKSHOP",
+	"LECTURE",
+	"HANDS_ON",
+	"MOCK_INTERVIEW",
+]);
+
+const sessionNameEnum = pgEnum("sessionName", ["GIT_LINKEDIN_BASE"]);
 
 export const feedbackTable = pgTable(
 	"feedback",
@@ -17,16 +27,9 @@ export const feedbackTable = pgTable(
 		workedWell: varchar({ length: 1000 }).notNull(),
 		improve: varchar({ length: 1000 }).notNull(),
 		rating: integer().notNull(),
-		sessionType: varchar({ length: 255 }).notNull().default("LECTURE"),
-		sessionName: varchar({ length: 255 })
-			.notNull()
-			.default("GIT_LINKEDIN_BASE"),
+		sessionType: sessionTypeEnum().default("LECTURE"),
+		sessionName: sessionNameEnum().notNull().default("GIT_LINKEDIN_BASE"),
 		sessionDate: date().notNull().default("2025-10-14"),
 	},
-	(table) => [
-		primaryKey({
-			name: "email_date_constraint",
-			columns: [table.email, table.sessionDate],
-		}),
-	],
+	(table) => [unique("email_date_unique").on(table.email, table.sessionDate)],
 );
