@@ -10,16 +10,18 @@ export const env = createEnv({
 		),
 	},
 
-	clientPrefix: "FEEDBACK_",
+	clientPrefix: "MENTORSHIP_",
 
 	client: {
-		FEEDBACK_APP_TITLE: v.string("App title must be a string"),
-		FEEDBACK_APP_DESCRIPTION: v.string("App description must be a string"),
-		FEEDBACK_APP_URL: v.pipe(
+		MENTORSHIP_APP_TITLE: v.string("App title must be a string"),
+		MENTORSHIP_APP_DESCRIPTION: v.string(
+			"App description must be a string",
+		),
+		MENTORSHIP_APP_URL: v.pipe(
 			v.string("App URL must be a string"),
 			v.url("App URL must be a valid URL"),
 		),
-		FEEDBACK_API_URL: v.pipe(
+		MENTORSHIP_API_URL: v.pipe(
 			v.string("API URL must be a string"),
 			v.url("API URL must be a valid URL"),
 		),
@@ -27,10 +29,10 @@ export const env = createEnv({
 	runtimeEnvStrict: {
 		SERVER_URL: process.env.SERVER_URL,
 		SUPABASE_URL: process.env.SUPABASE_URL,
-		FEEDBACK_APP_TITLE: process.env.FEEDBACK_APP_TITLE,
-		FEEDBACK_APP_DESCRIPTION: process.env.FEEDBACK_APP_DESCRIPTION,
-		FEEDBACK_APP_URL: process.env.FEEDBACK_APP_URL,
-		FEEDBACK_API_URL: process.env.FEEDBACK_API_URL,
+		MENTORSHIP_APP_TITLE: process.env.MENTORSHIP_APP_TITLE,
+		MENTORSHIP_APP_DESCRIPTION: process.env.MENTORSHIP_APP_DESCRIPTION,
+		MENTORSHIP_APP_URL: process.env.MENTORSHIP_APP_URL,
+		MENTORSHIP_API_URL: process.env.MENTORSHIP_API_URL,
 	},
 	emptyStringAsUndefined: true,
 });

@@ -1,7 +1,7 @@
 import { SolidQueryDevtools } from "@tanstack/solid-query-devtools";
 
-const FeedbackQueryDevTools = () => {
+const MentorshipQueryDevTools = () => {
 	return <SolidQueryDevtools buttonPosition="bottom-right" />;
 };
 
-export default FeedbackQueryDevTools;
+export default MentorshipQueryDevTools;

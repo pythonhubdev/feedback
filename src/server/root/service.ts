@@ -4,7 +4,7 @@ export abstract class RootService {
 	static async root(): Promise<TResponseSchema> {
 		return {
 			status: Status.Success,
-			message: "Welcome to feedback API! Elysia is running!",
+			message: "Welcome to Mentorship.01 API! Elysia is running!",
 		};
 	}
 }

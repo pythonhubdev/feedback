@@ -1,3 +1,3 @@
-# Feedback
+# Mentorship.01
 
-A feedback collection application for GitHub and LinkedIn sessions, extensible to handle future session types.
+Mentorship.01: A mentorship application for mentoring people, collecting feedback after each session, and providing guidance, extensible to handle future session types.

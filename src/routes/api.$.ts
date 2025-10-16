@@ -12,12 +12,14 @@ import {
 	Status,
 	type TResponseSchema,
 } from "~/core/schema/common";
+import { careerService } from "~/server/career";
+import { feedbackService } from "~/server/feedback";
 import rootService from "~/server/root";
 
 const app = new Elysia({
 	prefix: "/api",
 	aot: true,
-	name: env.FEEDBACK_APP_TITLE,
+	name: env.MENTORSHIP_APP_TITLE,
 	analytic: true,
 	sucrose: {},
 })
@@ -34,8 +36,8 @@ const app = new Elysia({
 		openapi({
 			documentation: {
 				info: {
-					title: env.FEEDBACK_APP_TITLE,
-					description: env.FEEDBACK_APP_DESCRIPTION,
+					title: env.MENTORSHIP_APP_TITLE,
+					description: env.MENTORSHIP_APP_DESCRIPTION,
 					version: "0.0.1",
 				},
 				servers: [
@@ -44,7 +46,7 @@ const app = new Elysia({
 						description: "Development server",
 					},
 					{
-						url: "https://feedback.crazzle.dev/api",
+						url: "https://mentorship01.crazzle.dev/api",
 						description: "Production server",
 					},
 				],
@@ -80,6 +82,8 @@ const app = new Elysia({
 
 // Register all services
 app.use(rootService);
+app.use(feedbackService);
+app.use(careerService);
 
 const handle = ({ request }: { request: Request }) => app.fetch(request);
 
@@ -97,4 +101,4 @@ export const Route = createFileRoute("/api/$")({
 
 export const api = createIsomorphicFn()
 	.server(() => treaty(app).api)
-	.client(() => treaty<typeof app>(env.FEEDBACK_APP_URL).api);
+	.client(() => treaty<typeof app>(env.MENTORSHIP_APP_URL).api);
