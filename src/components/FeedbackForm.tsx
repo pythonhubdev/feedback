@@ -130,7 +130,7 @@ export function FeedbackForm(props: FeedbackFormProps) {
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
-			class="min-h-screen bg-white dark:bg-gray-900"
+			class="min-h-screen bg-white dark:bg-black"
 		>
 			{/* Header */}
 			<FeedbackHeader
@@ -140,7 +140,7 @@ export function FeedbackForm(props: FeedbackFormProps) {
 			/>
 
 			{/* Form Content */}
-			<div class="px-6 py-12 md:px-12 md:py-16">
+			<div class="px-4 py-8 sm:px-6 sm:py-12 md:px-12 md:py-16">
 				<div class="max-w-4xl mx-auto">
 					<Show when={currentStep() === 0}>
 						<Motion.div
@@ -216,14 +216,14 @@ export function FeedbackForm(props: FeedbackFormProps) {
 					</Show>
 
 					{/* Navigation */}
-					<div class="flex gap-4 mt-12">
+					<div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8 sm:mt-12">
 						<Show when={currentStep() > 0}>
 							<Button
 								onClick={() =>
 									setCurrentStep(currentStep() - 1)
 								}
 								variant="outline"
-								class="border-2 border-black dark:border-white px-8 py-6 text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black"
+								class="w-full sm:w-auto border-2 border-black dark:border-white px-6 sm:px-8 py-4 sm:py-6 text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black text-sm sm:text-base"
 							>
 								PREVIOUS
 							</Button>
@@ -235,7 +235,7 @@ export function FeedbackForm(props: FeedbackFormProps) {
 									setCurrentStep(currentStep() + 1)
 								}
 								disabled={!canProceed()}
-								class="bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 px-8 py-6 disabled:opacity-30 border-0"
+								class="w-full sm:w-auto bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 px-6 sm:px-8 py-4 sm:py-6 disabled:opacity-30 border-0 text-sm sm:text-base"
 							>
 								NEXT STEP
 							</Button>
@@ -245,7 +245,7 @@ export function FeedbackForm(props: FeedbackFormProps) {
 							<Button
 								onClick={handleSubmit}
 								disabled={isSubmitting()}
-								class="bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 px-8 py-6 border-0 disabled:opacity-50 disabled:cursor-not-allowed"
+								class="w-full sm:w-auto bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 px-6 sm:px-8 py-4 sm:py-6 border-0 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
 							>
 								<Show when={isSubmitting()}>
 									<LoaderCircle

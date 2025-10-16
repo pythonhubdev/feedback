@@ -23,7 +23,7 @@ export function ThankYouContent(props: ThankYouContentProps) {
 				delay: 0.2,
 				duration: 0.6,
 			}}
-			class="max-w-2xl text-center"
+			class="max-w-2xl text-center px-4"
 		>
 			<ThankYouIcon />
 
@@ -31,7 +31,7 @@ export function ThankYouContent(props: ThankYouContentProps) {
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ delay: 0.5 }}
-				class="text-3xl md:text-4xl font-bold mb-6 text-black dark:text-white"
+				class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-black dark:text-white"
 			>
 				Thanks for your input
 			</Motion.h1>
@@ -40,7 +40,7 @@ export function ThankYouContent(props: ThankYouContentProps) {
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ delay: 0.6 }}
-				class="text-neutral-600 dark:text-neutral-400 mb-12 text-lg"
+				class="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 mb-8 sm:mb-12"
 			>
 				Your feedback helps us create better mentorship sessions. We'll
 				use your insights to make the next one even more valuable.
@@ -54,13 +54,13 @@ export function ThankYouContent(props: ThankYouContentProps) {
 			>
 				<Button
 					onClick={props.onBackToHome}
-					class="bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 px-8 py-6 border-0 w-full md:w-auto"
+					class="bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 px-6 sm:px-8 py-4 sm:py-6 border-0 w-full md:w-auto text-sm sm:text-base"
 				>
-					<Home class="w-5 h-5 mr-2" />
+					<Home class="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
 					BACK TO HOME
 				</Button>
 
-				<p class="text-sm text-neutral-500 dark:text-neutral-600">
+				<p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-600">
 					Your response has been recorded anonymously
 				</p>
 			</Motion.div>

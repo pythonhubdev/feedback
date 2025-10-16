@@ -1,14 +1,46 @@
 import { Moon, Sun } from "lucide-solid";
-import { createSignal } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 import { Motion } from "solid-motionone";
 
 export function ThemeToggle() {
-	const [currentTheme, setCurrentTheme] = createSignal("light");
+	const [currentTheme, setCurrentTheme] = createSignal<"light" | "dark">(
+		"light",
+	);
+
+	// Load theme from localStorage on mount
+	onMount(() => {
+		const savedTheme = localStorage.getItem("theme") as
+			| "light"
+			| "dark"
+			| null;
+		const prefersDark = window.matchMedia(
+			"(prefers-color-scheme: dark)",
+		).matches;
+		const theme = savedTheme || (prefersDark ? "dark" : "light");
+		setCurrentTheme(theme);
+		applyTheme(theme);
+	});
+
+	// Apply theme to document
+	const applyTheme = (theme: "light" | "dark") => {
+		if (theme === "dark") {
+			document.documentElement.classList.add("dark");
+		} else {
+			document.documentElement.classList.remove("dark");
+		}
+		localStorage.setItem("theme", theme);
+	};
+
+	// Apply theme whenever it changes
+	createEffect(() => {
+		applyTheme(currentTheme());
+	});
 
 	const handleToggle = () => {
 		const newTheme = currentTheme() === "light" ? "dark" : "light";
 		setCurrentTheme(newTheme);
 	};
+
 	return (
 		<Motion.button
 			hover={{ scale: 1.05 }}
