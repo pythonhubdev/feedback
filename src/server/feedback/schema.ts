@@ -21,6 +21,10 @@ const FeedbackSchema = v.object({
 	),
 	year: v.pipe(v.number(), v.minValue(2025, "Year must be at least 2025")),
 	batch: v.pipe(v.number(), v.minValue(1, "Batch must be at least 1")),
+	department: v.pipe(
+		v.string("Department must be a string"),
+		v.maxLength(100, "Department name is too long."),
+	),
 	workedWell: v.pipe(
 		v.string("Worked well must be a string"),
 		v.maxLength(1000, "Your feedback is too long."),

@@ -3,8 +3,9 @@ import {
 	DatabaseError,
 	DuplicateFeedbackError,
 } from "~/core/errors/databaseErrors.ts";
+import { feedbackTable } from "~/core/models/feedback.ts";
 import { Status, type TDataResponseSchema } from "~/core/schema/common.ts";
-import { database, feedbackTable } from "~/integrations/supabase/supabase.ts";
+import { database } from "~/integrations/supabase/supabase.ts";
 import type {
 	TFeedbackResponseSchema,
 	TFeedbackSchema,

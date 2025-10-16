@@ -7,14 +7,14 @@ import {
 	varchar,
 } from "drizzle-orm/pg-core";
 
-const sessionTypeEnum = pgEnum("sessionType", [
+export const sessionTypeEnum = pgEnum("sessionType", [
 	"WORKSHOP",
 	"LECTURE",
 	"HANDS_ON",
 	"MOCK_INTERVIEW",
 ]);
 
-const sessionNameEnum = pgEnum("sessionName", ["GIT_LINKEDIN_BASE"]);
+export const sessionNameEnum = pgEnum("sessionName", ["GIT_LINKEDIN_BASE"]);
 
 export const feedbackTable = pgTable(
 	"feedback",
@@ -24,6 +24,7 @@ export const feedbackTable = pgTable(
 		email: varchar({ length: 255 }).notNull(),
 		year: integer().notNull().default(2025),
 		batch: integer().notNull(),
+		department: varchar({ length: 100 }).notNull(),
 		workedWell: varchar({ length: 1000 }).notNull(),
 		improve: varchar({ length: 1000 }).notNull(),
 		rating: integer().notNull(),

@@ -12,6 +12,7 @@ import {
 	Status,
 	type TResponseSchema,
 } from "~/core/schema/common";
+import { careerService } from "~/server/career";
 import { feedbackService } from "~/server/feedback";
 import rootService from "~/server/root";
 
@@ -82,6 +83,7 @@ const app = new Elysia({
 // Register all services
 app.use(rootService);
 app.use(feedbackService);
+app.use(careerService);
 
 const handle = ({ request }: { request: Request }) => app.fetch(request);
 
