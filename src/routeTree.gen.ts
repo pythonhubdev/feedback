@@ -9,13 +9,25 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FeedbackThankYouRouteImport } from './routes/feedback.thank-you'
 import { Route as ApiSplatRouteImport } from './routes/api.$'
 
+const FeedbackRoute = FeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const FeedbackThankYouRoute = FeedbackThankYouRouteImport.update({
+  id: '/thank-you',
+  path: '/thank-you',
+  getParentRoute: () => FeedbackRoute,
 } as any)
 const ApiSplatRoute = ApiSplatRouteImport.update({
   id: '/api/$',
@@ -25,38 +37,59 @@ const ApiSplatRoute = ApiSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/feedback': typeof FeedbackRouteWithChildren
   '/api/$': typeof ApiSplatRoute
+  '/feedback/thank-you': typeof FeedbackThankYouRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/feedback': typeof FeedbackRouteWithChildren
   '/api/$': typeof ApiSplatRoute
+  '/feedback/thank-you': typeof FeedbackThankYouRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/feedback': typeof FeedbackRouteWithChildren
   '/api/$': typeof ApiSplatRoute
+  '/feedback/thank-you': typeof FeedbackThankYouRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/$'
+  fullPaths: '/' | '/feedback' | '/api/$' | '/feedback/thank-you'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/$'
-  id: '__root__' | '/' | '/api/$'
+  to: '/' | '/feedback' | '/api/$' | '/feedback/thank-you'
+  id: '__root__' | '/' | '/feedback' | '/api/$' | '/feedback/thank-you'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FeedbackRoute: typeof FeedbackRouteWithChildren
   ApiSplatRoute: typeof ApiSplatRoute
 }
 
 declare module '@tanstack/solid-router' {
   interface FileRoutesByPath {
+    '/feedback': {
+      id: '/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof FeedbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/feedback/thank-you': {
+      id: '/feedback/thank-you'
+      path: '/thank-you'
+      fullPath: '/feedback/thank-you'
+      preLoaderRoute: typeof FeedbackThankYouRouteImport
+      parentRoute: typeof FeedbackRoute
     }
     '/api/$': {
       id: '/api/$'
@@ -68,8 +101,21 @@ declare module '@tanstack/solid-router' {
   }
 }
 
+interface FeedbackRouteChildren {
+  FeedbackThankYouRoute: typeof FeedbackThankYouRoute
+}
+
+const FeedbackRouteChildren: FeedbackRouteChildren = {
+  FeedbackThankYouRoute: FeedbackThankYouRoute,
+}
+
+const FeedbackRouteWithChildren = FeedbackRoute._addFileChildren(
+  FeedbackRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FeedbackRoute: FeedbackRouteWithChildren,
   ApiSplatRoute: ApiSplatRoute,
 }
 export const routeTree = rootRouteImport
