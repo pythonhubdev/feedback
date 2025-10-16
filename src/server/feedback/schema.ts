@@ -19,7 +19,7 @@ const FeedbackSchema = v.object({
 	year: v.pipe(
 		v.number("Year must be a number"),
 		v.minValue(1, "Year must be at least 1"),
-		v.maxValue(5, "Year must be at most 4"),
+		v.maxValue(5, "Year must be at most 5"),
 	),
 	batch: v.pipe(
 		v.number("Batch must be a number"),
