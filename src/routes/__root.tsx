@@ -12,6 +12,13 @@ import styleCss from "../styles.css?url";
 export const Route = createRootRouteWithContext()({
 	head: () => ({
 		links: [{ rel: "stylesheet", href: styleCss }],
+		meta: [
+			{
+				title: "Mentorship.01",
+				lang: "en-US",
+				charset: "utf-8",
+			},
+		],
 	}),
 	shellComponent: RootComponent,
 });
