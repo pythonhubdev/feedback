@@ -5,8 +5,8 @@ import {
 	Scripts,
 } from "@tanstack/solid-router";
 import { TanStackRouterDevtools } from "@tanstack/solid-router-devtools";
-import FeedbackQueryDevTools from "~/integrations/tanstack/qdevtools.tsx";
-import FeedbackQueryProvider from "~/integrations/tanstack/query.tsx";
+import MentorshipQueryDevTools from "~/integrations/tanstack/qdevtools.tsx";
+import MentorshipQueryProvider from "~/integrations/tanstack/query.tsx";
 import styleCss from "../styles.css?url";
 
 export const Route = createRootRouteWithContext()({
@@ -26,12 +26,12 @@ export const Route = createRootRouteWithContext()({
 function RootComponent() {
 	return (
 		<>
-			<FeedbackQueryProvider>
+			<MentorshipQueryProvider>
 				<HeadContent />
 				<Outlet />
 				<TanStackRouterDevtools />
-				<FeedbackQueryDevTools />
-			</FeedbackQueryProvider>
+				<MentorshipQueryDevTools />
+			</MentorshipQueryProvider>
 			<Scripts />
 		</>
 	);

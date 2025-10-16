@@ -1,8 +1,5 @@
 import { Effect } from "effect";
-import {
-	DatabaseError,
-	DuplicateFeedbackError,
-} from "~/core/errors/databaseErrors.ts";
+import { DatabaseError, DuplicateError } from "~/core/errors/databaseErrors.ts";
 import { feedbackTable } from "~/core/models/feedback.ts";
 import { Status, type TDataResponseSchema } from "~/core/schema/common.ts";
 import { database } from "~/integrations/supabase/supabase.ts";
@@ -31,7 +28,7 @@ export default abstract class FeedbackEffect {
 				(error.message.includes("unique") ||
 					// @ts-expect-error - accessing drizzle error structure
 					error.cause?.constraint_name?.includes("unique"))
-					? new DuplicateFeedbackError(
+					? new DuplicateError(
 							"A feedback with this email for this session date already exists.",
 						)
 					: new DatabaseError(
@@ -40,7 +37,7 @@ export default abstract class FeedbackEffect {
 						),
 		}) as Effect.Effect<
 			TFeedbackResponseSchema[],
-			DatabaseError | DuplicateFeedbackError,
+			DatabaseError | DuplicateError,
 			never
 		>;
 

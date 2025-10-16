@@ -1,10 +1,7 @@
 import { Effect } from "effect";
-import {
-	DatabaseError,
-	DuplicateFeedbackError,
-} from "~/core/errors/databaseErrors.ts";
+import { DatabaseError, DuplicateError } from "~/core/errors/databaseErrors.ts";
 import { careerTable } from "~/core/models/career.ts";
-import { Status } from "~/core/schema/common.ts";
+import { Status, type TDataResponseSchema } from "~/core/schema/common.ts";
 import { database } from "~/integrations/supabase/supabase.ts";
 import type {
 	TCareerResponseSchema,
@@ -27,7 +24,7 @@ export default abstract class CareerEffect {
 				(error.message.includes("unique") ||
 					// @ts-expect-error - accessing drizzle error structure
 					error.cause?.constraint_name?.includes("unique"))
-					? new DuplicateFeedbackError(
+					? new DuplicateError(
 							"A career submission with this email already exists.",
 						)
 					: new DatabaseError(
@@ -36,14 +33,14 @@ export default abstract class CareerEffect {
 						),
 		}) as Effect.Effect<
 			TCareerResponseSchema[],
-			DatabaseError | DuplicateFeedbackError,
+			DatabaseError | DuplicateError,
 			never
 		>;
 
 	// Transform the Effect result to our API response format
 	static toApiResponse = (
 		result: TCareerResponseSchema[],
-	): { status: Status; message: string; data?: any } => {
+	): TDataResponseSchema => {
 		const career = result[0];
 		return {
 			status: Status.Success,

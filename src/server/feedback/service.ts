@@ -9,7 +9,7 @@ export default abstract class FeedbackService {
 			Effect.map(FeedbackEffect.toApiResponse),
 			Effect.catchAll((error) =>
 				Effect.succeed(
-					error._tag === "DuplicateFeedbackError"
+					error._tag === "DuplicateError"
 						? {
 								status: Status.Error,
 								message: error.message,

@@ -1,7 +1,7 @@
 {
-	"name": "feedback",
+	"name": "mentorship.01",
 	"version": "0.0.1",
-	"description": "A feedback collection application for GitHub and LinkedIn sessions, extensible to handle future session types.",
+	"description": "Mentorship.01: A mentorship application for mentoring people, collecting feedback after each session, and providing guidance, extensible to handle future session types.",
 	"private": true,
 	"type": "module",
 	"author": {

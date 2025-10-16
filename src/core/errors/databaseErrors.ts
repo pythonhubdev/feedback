@@ -10,12 +10,12 @@ class DatabaseError extends Error {
 	}
 }
 
-class DuplicateFeedbackError extends Error {
-	readonly _tag = "DuplicateFeedbackError";
+class DuplicateError extends Error {
+	readonly _tag = "DuplicateError";
 	constructor(message: string) {
 		super(message);
-		this.name = "DuplicateFeedbackError";
+		this.name = "DuplicateError";
 	}
 }
 
-export { DatabaseError, DuplicateFeedbackError };
+export { DatabaseError, DuplicateError };
