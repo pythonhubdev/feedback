@@ -86,12 +86,12 @@ export function FeedbackForm(props: FeedbackFormProps) {
 			feedback: feedback(),
 		});
 
-		triggerConfetti();
-
-		// Navigate to thank you page immediately after submission
-		setTimeout(() => {
-			props.onComplete();
-		}, 500); // Shorter delay to feel more responsive
+		// Trigger confetti but don't rely on it for navigation
+		try {
+			triggerConfetti();
+		} catch (error) {
+			console.warn("Confetti failed:", error);
+		}
 	};
 
 	const triggerConfetti = () => {

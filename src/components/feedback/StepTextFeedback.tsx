@@ -61,7 +61,7 @@ export function StepTextFeedback(props: StepTextFeedbackProps) {
 						updateField(fieldName)(e.currentTarget.value)
 					}
 					placeholder={config.placeholder}
-					class="min-h-[200px] border-black dark:border-white resize-none text-base p-6 bg-white dark:bg-gray-950 text-black dark:text-white"
+					class="min-h-[200px] border-black dark:border-white resize-none text-sm p-6 bg-white dark:bg-gray-950 text-black dark:text-white focus:ring-border-neutral-200 focus:ring-neutral-300"
 				/>
 			</TextField>
 

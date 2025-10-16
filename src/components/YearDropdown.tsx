@@ -42,7 +42,7 @@ export function YearDropdown(props: YearDropdownProps) {
 			<button
 				type="button"
 				onClick={() => setIsOpen(!isOpen())}
-				class={`border-2 border-black dark:border-white h-12 bg-white dark:bg-gray-950 w-full text-base px-3 py-2 rounded-md flex items-center justify-between cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 ${props.class}`}
+				class={`border-2 border-black dark:border-white h-10 bg-white dark:bg-gray-950 w-full text-sm px-3 py-2 rounded-md flex items-center justify-between cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 ${props.class} focus:outline-none focus:border-neutral-400 focus:dark:border-neutral-600`}
 			>
 				<span
 					class={
@@ -78,11 +78,11 @@ export function YearDropdown(props: YearDropdownProps) {
 								<button
 									type="button"
 									onClick={() => handleSelect(year)}
-									class={`w-full text-left px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors ${
+									class={`w-full text-left px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors ${
 										props.value === year
 											? "bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
 											: "text-black dark:text-white"
-									}`}
+									} focus:outline-none focus:bg-gray-100 focus:dark:bg-gray-800`}
 								>
 									{year}
 								</button>

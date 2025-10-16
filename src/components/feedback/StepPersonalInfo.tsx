@@ -56,7 +56,7 @@ export function StepPersonalInfo(props: StepPersonalInfoProps) {
 							updateField("name")(e.currentTarget.value)
 						}
 						placeholder="Your full name"
-						class="border-2 border-black dark:border-white h-12 text-base bg-white dark:bg-gray-950 text-black dark:text-white"
+						class="border-2 border-black dark:border-white h-12 text-sm bg-white dark:bg-gray-950 text-black dark:text-white"
 					/>
 				</TextField>
 
@@ -72,7 +72,7 @@ export function StepPersonalInfo(props: StepPersonalInfoProps) {
 							updateField("email")(e.currentTarget.value)
 						}
 						placeholder="your.email@example.com"
-						class="border-2 border-black dark:border-white h-12 text-base bg-white dark:bg-gray-950 text-black dark:text-white"
+						class="border-2 border-black dark:border-white h-12 text-sm bg-white dark:bg-gray-950 text-black dark:text-white"
 					/>
 				</TextField>
 
@@ -92,7 +92,7 @@ export function StepPersonalInfo(props: StepPersonalInfoProps) {
 								</SelectItem>
 							)}
 						>
-							<SelectTrigger class="border-2 border-black dark:border-white h-12 bg-white dark:bg-gray-950 w-full">
+							<SelectTrigger class="border-2 border-black dark:border-white h-10 bg-white dark:bg-gray-950 w-full text-sm">
 								<SelectValue<string>>
 									{(state) => state.selectedOption()}
 								</SelectValue>
@@ -131,7 +131,7 @@ export function StepPersonalInfo(props: StepPersonalInfoProps) {
 							</SelectItem>
 						)}
 					>
-						<SelectTrigger class="border-2 border-black dark:border-white h-12 bg-white dark:bg-gray-950 w-full">
+						<SelectTrigger class="border-2 border-black dark:border-white h-10 bg-white dark:bg-gray-950 w-full text-sm">
 							<SelectValue<string>>
 								{(state) => state.selectedOption()}
 							</SelectValue>

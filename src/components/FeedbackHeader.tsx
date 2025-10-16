@@ -23,14 +23,14 @@ export function FeedbackHeader(props: FeedbackHeaderProps) {
 					<span class="tracking-wider text-sm">BACK</span>
 				</Button>
 				<div class="mb-6">
-					<h2 class="mb-2 text-black dark:text-white">
+					<h2 class="mb-2 text-black dark:text-white text-xl font-medium">
 						Session Feedback
 					</h2>
 					<p class="text-neutral-600 dark:text-neutral-400">
 						Step {props.currentStep} of {props.totalSteps}
 					</p>
 				</div>
-				<Progress value={progress()} />
+				<Progress value={progress()} class="h-0.5" />
 			</div>
 		</div>
 	);
