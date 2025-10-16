@@ -7,22 +7,16 @@ import type {
 	TCareerResponseSchema,
 	TCareerSchema,
 } from "~/server/career/schema.ts";
-import {
-	logDebug,
-	logError,
-	logInfo,
-	logWarning,
-} from "~/server/logger/service.ts";
 
 export default abstract class CareerEffect {
 	static createCareerEffect = (body: TCareerSchema) =>
 		Effect.gen(function* () {
-			yield* logInfo("Starting career submission creation", {
+			yield* Effect.logInfo("Starting career submission creation", {
 				email: body.email,
 				name: body.name,
 			});
 
-			yield* logDebug("Inserting career data into database");
+			yield* Effect.logDebug("Inserting career data into database");
 
 			return yield* Effect.tryPromise({
 				try: () =>
@@ -35,7 +29,7 @@ export default abstract class CareerEffect {
 						.returning() as Promise<TCareerResponseSchema[]>,
 				catch: (error) => {
 					Effect.runSync(
-						logError("Database operation failed", {
+						Effect.logError("Database operation failed", {
 							errorType:
 								error instanceof Error
 									? error.constructor.name
@@ -58,9 +52,12 @@ export default abstract class CareerEffect {
 							error.cause?.constraint_name?.includes("unique"))
 					) {
 						Effect.runSync(
-							logWarning("Duplicate career submission detected", {
-								email: body.email,
-							}),
+							Effect.logWarning(
+								"Duplicate career submission detected",
+								{
+									email: body.email,
+								},
+							),
 						);
 						return new DuplicateError(
 							"A career submission with this email already exists.",
@@ -68,7 +65,7 @@ export default abstract class CareerEffect {
 					}
 
 					Effect.runSync(
-						logError("Unexpected database error", {
+						Effect.logError("Unexpected database error", {
 							email: body.email,
 							rawError: JSON.stringify(
 								error,
@@ -84,7 +81,7 @@ export default abstract class CareerEffect {
 				},
 			}).pipe(
 				Effect.tap((data) =>
-					logInfo("Career submission inserted successfully", {
+					Effect.logInfo("Career submission inserted successfully", {
 						recordId: String(data[0]?.id || "unknown"),
 						recordCount: String(data.length),
 					}),
@@ -102,7 +99,7 @@ export default abstract class CareerEffect {
 	): TDataResponseSchema => {
 		const career = result[0];
 		Effect.runSync(
-			logInfo("Career submission response prepared", {
+			Effect.logInfo("Career submission response prepared", {
 				hasData: String(!!career),
 				recordId: String(career?.id || "none"),
 			}),
