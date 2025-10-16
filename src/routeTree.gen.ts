@@ -8,12 +8,11 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import {Route as rootRouteImport} from './routes/__root'
-import {Route as ThankYouRouteImport} from './routes/thank-you'
-import {Route as FeedbackRouteImport} from './routes/feedback'
-import {Route as IndexRouteImport} from './routes/index'
-import {Route as ApiSplatRouteImport} from './routes/api.$'
-import type {getRouter} from './router.tsx'
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as ThankYouRouteImport } from './routes/thank-you'
+import { Route as FeedbackRouteImport } from './routes/feedback'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiSplatRouteImport } from './routes/api.$'
 
 const ThankYouRoute = ThankYouRouteImport.update({
   id: '/thank-you',
@@ -113,6 +112,7 @@ export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
+import type { getRouter } from './router.tsx'
 declare module '@tanstack/solid-start' {
   interface Register {
     ssr: true

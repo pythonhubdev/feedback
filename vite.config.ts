@@ -22,4 +22,6 @@ export default defineConfig({
 			"~": path.resolve(__dirname, "./src"),
 		},
 	},
+	// Expose MENTORSHIP_ prefixed env variables to the client
+	envPrefix: ["MENTORSHIP_"],
 });

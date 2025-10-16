@@ -1,5 +1,7 @@
 import { createSignal, Show } from "solid-js";
 import { Motion } from "solid-motionone";
+import { useFeedbackSubmission } from "~/hooks/useFeedbackSubmission";
+import { SessionName, SessionTypes } from "~/server/feedback/schema.ts";
 import { FeedbackHeader } from "./FeedbackHeader";
 import { StepPersonalInfo } from "./feedback/StepPersonalInfo";
 import { StepRatings } from "./feedback/StepRatings";
@@ -32,6 +34,7 @@ interface FeedbackFormProps {
 }
 
 export function FeedbackForm(props: FeedbackFormProps) {
+	const { submitFeedback, isSubmitting } = useFeedbackSubmission();
 	const [currentStep, setCurrentStep] = createSignal(0);
 	const [personalInfo, setPersonalInfo] = createSignal<PersonalInfoData>({
 		name: "",
@@ -79,15 +82,38 @@ export function FeedbackForm(props: FeedbackFormProps) {
 		return true;
 	};
 
-	const handleSubmit = () => {
-		console.log("Feedback submitted:", {
-			personalInfo: personalInfo(),
-			ratings: ratings(),
-			feedback: feedback(),
-		});
+	const handleSubmit = async () => {
+		try {
+			const info = personalInfo();
+			const rating = ratings();
+			const feedbackData = feedback();
 
-		// Navigate to thank you page
-		props.onComplete();
+			// Calculate average rating
+			const avgRating = Math.round(
+				(rating.usefulness + rating.clarity + rating.engagement) / 3,
+			);
+
+			const feedbackPayload = {
+				name: info.name,
+				email: info.email,
+				year: parseInt(info.year, 10),
+				batch: parseInt(info.batch, 10),
+				department: info.department,
+				workedWell: feedbackData.liked,
+				improve: feedbackData.improve,
+				rating: avgRating,
+				sessionType: SessionTypes.Lecture, // Using enum value
+				sessionName: SessionName.GitLinkedInBase, // Using enum value
+				sessionDate: "2025-10-14", // Constant date as requested
+			};
+
+			await submitFeedback(feedbackPayload);
+
+			// Navigate to thank you page after successful submission
+			props.onComplete();
+		} catch (_error) {
+			// Error is already handled by the toast in the hook
+		}
 	};
 
 	return (
@@ -209,9 +235,12 @@ export function FeedbackForm(props: FeedbackFormProps) {
 						<Show when={currentStep() === totalSteps - 1}>
 							<Button
 								onClick={handleSubmit}
-								class="bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 px-8 py-6 border-0"
+								disabled={isSubmitting}
+								class="bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 px-8 py-6 border-0 disabled:opacity-50 disabled:cursor-not-allowed"
 							>
-								SUBMIT FEEDBACK
+								{isSubmitting
+									? "SUBMITTING..."
+									: "SUBMIT FEEDBACK"}
 							</Button>
 						</Show>
 					</div>

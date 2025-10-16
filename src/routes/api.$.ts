@@ -19,7 +19,7 @@ import rootService from "~/server/root";
 const app = new Elysia({
 	prefix: "/api",
 	aot: true,
-	name: env.MENTORSHIP_APP_TITLE,
+	name: env.APP_TITLE,
 	analytic: true,
 	sucrose: {},
 })
@@ -36,8 +36,8 @@ const app = new Elysia({
 		openapi({
 			documentation: {
 				info: {
-					title: env.MENTORSHIP_APP_TITLE,
-					description: env.MENTORSHIP_APP_DESCRIPTION,
+					title: env.APP_TITLE,
+					description: env.APP_DESCRIPTION,
 					version: "0.0.1",
 				},
 				servers: [
@@ -101,4 +101,4 @@ export const Route = createFileRoute("/api/$")({
 
 export const api = createIsomorphicFn()
 	.server(() => treaty(app).api)
-	.client(() => treaty<typeof app>(env.MENTORSHIP_APP_URL).api);
+	.client(() => treaty<typeof app>(env.APP_URL).api);
