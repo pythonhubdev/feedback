@@ -13,9 +13,7 @@ export default defineConfig({
 		viteTsConfigPaths({
 			projects: ["./tsconfig.json"],
 		}),
-		nitroV2Plugin({
-			preset: "bun",
-		}),
+		nitroV2Plugin({}),
 		tailwindcss(),
 		tanstackStart(),
 		solidPlugin({ ssr: true }),
