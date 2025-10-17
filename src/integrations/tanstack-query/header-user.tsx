@@ -1,7 +1,5 @@
 import { SolidQueryDevtools } from "@tanstack/solid-query-devtools";
 
-const MentorshipQueryDevTools = () => {
+export default function AppTanstackQueryHeaderUser() {
 	return <SolidQueryDevtools buttonPosition="bottom-right" />;
-};
-
-export default MentorshipQueryDevTools;
+}

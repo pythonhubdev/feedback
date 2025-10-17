@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"lib": ["DOM", "DOM.Iterable", "ES2024"],
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"target": "ESNext",
 		"module": "ESNext",
 		"baseUrl": ".",
@@ -31,5 +31,5 @@
 		"incremental": true
 	},
 	"include": ["src", "**/*.ts", "**/*.tsx"],
-	"exclude": ["node_modules", "dist", "build"]
+	"exclude": ["node_modules", "dist", ".output", ".tanstack", ".nitro"]
 }
