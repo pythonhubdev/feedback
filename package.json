@@ -10,7 +10,7 @@
 		"format": "biome format",
 		"lint": "biome lint",
 		"check": "biome check",
-		"start": "node .output/server/index.mjs"
+		"start": "bun dist/server/server.js"
 	},
 	"dependencies": {
 		"@t3-oss/env-core": "^0.13.8",
@@ -24,13 +24,15 @@
 		"@tanstack/solid-start": "^1.132.25",
 		"solid-js": "^1.9.5",
 		"tailwindcss": "^4.0.6",
-		"vite": "^7.1.7",
+		"vite": "npm:rolldown-vite@latest",
 		"vite-tsconfig-paths": "^5.1.4"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.2.4",
 		"typescript": "^5.7.2",
-		"vite": "^7.1.7",
 		"vite-plugin-solid": "^2.11.2"
+	},
+	"overrides": {
+		"vite": "npm:rolldown-vite@latest"
 	}
 }
