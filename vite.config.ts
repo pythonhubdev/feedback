@@ -13,7 +13,9 @@ export default defineConfig({
 		viteTsConfigPaths({
 			projects: ["./tsconfig.json"],
 		}),
-		nitroV2Plugin(),
+		nitroV2Plugin({
+			preset: "bun",
+		}),
 		tailwindcss(),
 		tanstackStart(),
 		solidPlugin({ ssr: true }),
@@ -33,5 +35,5 @@ export default defineConfig({
 			"~": path.resolve(__dirname, "./src"),
 		},
 	},
-	envPrefix: ["MENTORSHIP_"],
+	envPrefix: ["VITE_", "MENTORSHIP_"],
 });

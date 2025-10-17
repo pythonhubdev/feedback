@@ -15,7 +15,8 @@
 		"test": "vitest run",
 		"format": "biome format",
 		"lint": "biome lint",
-		"check": "biome check"
+		"check": "biome check",
+		"start": "bun run .output/server/index.mjs           "
 	},
 	"dependencies": {
 		"@ark-ui/solid": "^5.26.1",
